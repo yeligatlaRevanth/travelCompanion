@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".A7_TripPage"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include
+            layout="@layout/a4_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:layout_scrollFlags="scroll|enterAlways"
+            />
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Created By TextView -->
+            <TextView
+                android:id="@+id/createdByTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/baskervville"
+                android:textSize="20sp"
+                android:text="Created by: "
+                 />
+
+            <!-- Location TextView -->
+            <TextView
+                android:id="@+id/locationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/createdByTextView"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Location: "
+                android:fontFamily="@font/baskervville"
+                android:textSize="20sp" />
+
+            <!-- Number of Days TextView -->
+            <TextView
+                android:id="@+id/numberOfDaysTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/locationTextView"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Number of days: "
+                android:fontFamily="@font/baskervville"
+                android:textSize="20sp"/>
+
+            <!-- Date TextView -->
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/numberOfDaysTextView"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Date: "
+                android:fontFamily="@font/baskervville"
+                android:textSize="20sp" />
+
+            <!-- Description TextView -->
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dateTextView"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Description: "
+                android:fontFamily="@font/baskervville"
+                android:textSize="20sp" />
+
+            <!-- ImageView for Image -->
+            <ImageView
+                android:id="@+id/tripImageView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/descriptionTextView"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tripImageView"
+                android:layout_centerHorizontal="true"
+                android:ems="8"
+                android:text="Open Maps"
+                android:backgroundTint="#008080"
+                android:id="@+id/btnOpenMap"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnOpenMap"
+                android:layout_centerHorizontal="true"
+                android:ems="8"
+                android:text="Join"
+                android:backgroundTint="#008080"
+                android:id="@+id/btnJoin"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
