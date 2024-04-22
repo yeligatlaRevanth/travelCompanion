@@ -44,8 +44,7 @@ class A1_SplashScreen : AppCompatActivity() {
         animateImageView(p5ImageView, -80.0f, -240.0f)
         animateImageView(p6ImageView, 80.0f, 350.0f)
 
-        // Delay transition to next activity after animation finishes
-        val delayMillis = 2000L // Adjust the delay as needed
+        val delayMillis = 2000L
         Handler().postDelayed({
             val intent = Intent(this@A1_SplashScreen, A2_SignUp::class.java)
             startActivity(intent)
@@ -55,14 +54,14 @@ class A1_SplashScreen : AppCompatActivity() {
 
     private fun animateImageView(imageView: ImageView, toX: Float,  toY: Float) {
         val translateAnimation = TranslateAnimation(0f, toX, 0f, toY)
-        translateAnimation.duration = 2000 // Adjust the duration as needed
+        translateAnimation.duration = 2000
         translateAnimation.fillAfter = true
 
         imageView.startAnimation(translateAnimation)
     }
     private fun animateTextView(textView: TextView) {
         val alphaAnimation = AlphaAnimation(0f, 1f)
-        alphaAnimation.duration = 1000 // Adjust the duration as needed
+        alphaAnimation.duration = 1000
         alphaAnimation.fillAfter = true
 
         textView.startAnimation(alphaAnimation)

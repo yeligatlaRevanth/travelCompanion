@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".A1_SplashScreen"
-    android:background="#E2F8FF">
+    android:background="#ffd7c0">
 
     <ImageView
         android:id="@+id/p1"
@@ -75,13 +75,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="132dp"
         android:alpha="1"
-        android:fontFamily="@font/baskervville"
-
+        android:fontFamily="@font/cormorant_garamond_medium"
         android:text="Travel Companion"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textFontWeight="950"
         android:textSize="28dp"
         android:textStyle="bold"
-        android:textFontWeight="950"
         android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

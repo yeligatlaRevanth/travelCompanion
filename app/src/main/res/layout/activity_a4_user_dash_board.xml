@@ -20,10 +20,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello User"
+            android:text="Availabe Trips"
             android:textSize="24dp"
             android:fontFamily="@font/baskervville"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
             android:id="@+id/tv_user"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/white"
-        app:menu="@menu/a4_navmenu_items" />
+        app:menu="@menu/a4_navmenu_items"
+        app:headerLayout="@layout/menu_header_layout"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

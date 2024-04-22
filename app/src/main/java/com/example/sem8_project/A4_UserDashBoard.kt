@@ -1,10 +1,13 @@
 package com.example.sem8_project
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -15,6 +18,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +36,8 @@ class A4_UserDashBoard : AppCompatActivity(), NavigationView.OnNavigationItemSel
     lateinit var drawerToggle: ActionBarDrawerToggle
     lateinit var tv_User: TextView
 
+    private lateinit var navMenuImageProfile: ImageView
+    private lateinit var navMenuNameText: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var tripAdapter: A4_C_RecyclerViewAdapter
 
@@ -47,12 +53,64 @@ class A4_UserDashBoard : AppCompatActivity(), NavigationView.OnNavigationItemSel
         //Nav Menu Items - Create Trip Alert,Previous Trips, User Profile, Logout
         setHamburgerIcon()
 
+
+
         val nvDrawer: NavigationView = findViewById(R.id.nvView)
         setupDrawerContent(nvDrawer)
+        val headerView = nvDrawer.getHeaderView(0)
+        navMenuImageProfile = headerView.findViewById(R.id.navmenu_ImageProfile)
+        navMenuNameText = headerView.findViewById(R.id.navmenu_nameview)
 
+        loadUserProfileImage()
+        loadUserName()
         setTrips()
 
     }
+    private fun loadUserName() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        currentUser?.let { user ->
+            val userId = user.uid
+            val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId)
+
+            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val userName = dataSnapshot.child("userName").getValue(String::class.java)
+                    // Set the user name to the TextView
+                    navMenuNameText.text = userName
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Handle errors
+                    Log.e(TAG, "Failed to load user name: ${databaseError.message}")
+                }
+            })
+        }
+    }
+    private fun loadUserProfileImage() {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        currentUser?.let { user ->
+            val userId = user.uid
+            val userImageRef = FirebaseStorage.getInstance().getReference("UserImages")
+
+            userImageRef.listAll().addOnSuccessListener { result ->
+                result.items.firstOrNull { imageRef ->
+                    val parts = imageRef.name.split("%_%")
+                    parts.size == 2 && parts[0] == userId
+                }?.downloadUrl?.addOnSuccessListener { uri ->
+                    // Load the image into ImageView
+                    Glide.with(this@A4_UserDashBoard).load(uri).into(navMenuImageProfile)
+                } ?: run {
+                    // Handle no matching image found
+                    Log.e(TAG, "No profile image found for user: $userId")
+                    navMenuImageProfile.setImageURI(Uri.parse("R.id.imageProfile"))
+                }
+            }.addOnFailureListener { exception ->
+                // Handle errors
+                Log.e(TAG, "Failed to fetch user profile image: ${exception.message}")
+            }
+        }
+    }
+
 
 
     fun setTrips() {
@@ -82,17 +140,24 @@ class A4_UserDashBoard : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
                                 // Fetch other trip details
                                 val location = tripSnapshot.child("location").value as? String ?: ""
-                                val imageRef = FirebaseStorage.getInstance().getReference("trip_images").child(tripId)
-                                imageRef.downloadUrl.addOnSuccessListener { uri ->
-                                    // Add the trip details to the list
-                                    val trip = A4_C_Trip_Details(location, username, uri.toString(), tripId)
-                                    tripsList.add(trip)
+                                val imageRef = FirebaseStorage.getInstance().getReference("trip_images/").child(tripId)
+                                imageRef.metadata.addOnSuccessListener {
+                                    // Image file exists
+                                    imageRef.downloadUrl.addOnSuccessListener { uri ->
+                                        // Add the trip details to the list
+                                        val trip = A4_C_Trip_Details(location, username, uri.toString(), tripId)
+                                        tripsList.add(trip)
 
-                                    // Set up RecyclerView after fetching all trip details
-                                    setupRecyclerView(tripsList)
+                                        // Set up RecyclerView after fetching all trip details
+                                        setupRecyclerView(tripsList)
+                                    }.addOnFailureListener { exception ->
+                                        // Handle errors
+                                        Toast.makeText(this@A4_UserDashBoard, "Failed to fetch image: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                    }
                                 }.addOnFailureListener { exception ->
                                     // Handle errors
-                                    Toast.makeText(this@A4_UserDashBoard, "Failed to fetch image: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                    Log.d("MyTest", tripId)
+                                    Toast.makeText(this@A4_UserDashBoard, "Image file not found: ${exception.message}", Toast.LENGTH_SHORT).show()
                                 }
                             }
 
@@ -162,12 +227,12 @@ class A4_UserDashBoard : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 startActivity(i)
 
             }
-            R.id.nav_prevTrips->{
-                Toast.makeText(this, "Previous Trips Selected", Toast.LENGTH_SHORT).show()
-
-            }
             R.id.nav_logout->{
                 showLogoutConfirmationDialog()
+            }
+            R.id.nav_steps->{
+                val i = Intent(this, A8_UserSteps::class.java)
+                startActivity(i)
             }
         }
         mDrawer?.closeDrawers()

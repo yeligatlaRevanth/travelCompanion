@@ -12,13 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/bg_login"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/cormorant_garamond_bold"
         android:text="JOIN US! NOW!"
         android:textFontWeight="950"
-        android:fontFamily="@font/baskervville"/>
+        android:textStyle="bold" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,10 +71,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="14dp"
-                android:drawableStart="@drawable/baseline_password_24"
+                android:drawableStart="@drawable/baseline_lock_24"
                 android:ems="12"
                 android:inputType="textPassword"
-                android:fontFamily="@font/abril_fatface"
+                android:fontFamily="@font/baskervville"
                 android:hint="Password" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -97,8 +99,8 @@
                 android:drawablePadding="14dp"
                 android:ems="12"
                 android:inputType="textPassword"
-                android:drawableStart="@drawable/baseline_password_24"
-                android:fontFamily="@font/abril_fatface"
+                android:drawableStart="@drawable/baseline_lock_24"
+                android:fontFamily="@font/baskervville"
                 android:hint="Confirm Password" />
 
         </com.google.android.material.textfield.TextInputLayout>

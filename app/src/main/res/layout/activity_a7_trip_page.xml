@@ -99,7 +99,7 @@
                 android:layout_centerHorizontal="true"
                 android:ems="8"
                 android:text="Open Maps"
-                android:backgroundTint="#008080"
+                android:backgroundTint="#FF5E5E"
                 android:id="@+id/btnOpenMap"/>
             <Button
                 android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
                 android:layout_centerHorizontal="true"
                 android:ems="8"
                 android:text="Join"
-                android:backgroundTint="#008080"
+                android:backgroundTint="#FF5E5E"
                 android:id="@+id/btnJoin"/>
 
         </RelativeLayout>

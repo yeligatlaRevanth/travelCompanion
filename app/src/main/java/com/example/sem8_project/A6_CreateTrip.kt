@@ -2,12 +2,14 @@ package com.example.sem8_project
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.util.Calendar
 
 class A6_CreateTrip : AppCompatActivity() {
     lateinit var edtLocation: EditText
@@ -53,7 +56,29 @@ class A6_CreateTrip : AppCompatActivity() {
         // Set click listener for Create Trip button
         btnCreateTrip.setOnClickListener {
             createTrip()
+
         }
+        edtDate.setOnClickListener {
+            showDatePicker()
+        }
+    }
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                // Set selected date to edtDate field
+                edtDate.setText(String.format("%02d/%02d/%d", dayOfMonth, month + 1, year))
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
     }
 
     private fun setImageView() {
